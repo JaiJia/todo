@@ -1,49 +1,80 @@
 /* common style */
+
 .clearfix:after {
-visibility: hidden;
-display: block;
-font-size: 0;
-content: " ";
-clear: both;
-height: 0;
+    font-size: 0;
+
+    display: block;
+    visibility: hidden;
+    clear: both;
+
+    height: 0;
+
+    content: ' ';
 }
-.clearfix{
-    *zoom:1;
+
+.clearfix {
+    zoom: 1;
 }
 
 body {
     font-size: 16px;
 }
 
+.new-bottom {
+    line-height: 2rem;
+
+    height: 2rem;
+
+    text-align: center;
+
+    border-top: 1px solid #ddd;
+    background: url('../images/new.png') no-repeat 35% center;
+    background-size: .8rem;
+    background-color: #ececec;
+}
+
+.new-bottom:hover {
+    cursor: default;
+    background-color: #fff;
+}
+
+/* header */
 .title {
-    height: 4rem;
-    background-color: #DDD;
-    padding-left: 1rem;
     font-size: 2rem;
-    line-height: 4rem;
+    line-height: 7vh;
+
+    height: 7vh;
+    padding-left: 1rem;
+
     color: #adadad;
+    background-color: #ddd;
 }
 
 content {
-
+    display: flex;
 }
 
+/* 分类列表 */
 .classify {
-    float: left;
-    width: 18rem;
-    padding-left: 1rem;
-    background-color: #f2f2f2;
+    display: flex;
+    flex: 1;
+
+    min-height: 93vh;
+
     border-right: 1px solid #e7e7e7;
-    border-bottom: 1px solid #e7e7e7;
+    background-color: #f2f2f2;
+
+    flex-flow: column;
 }
 
 .classify li {
     line-height: 2rem;
 }
 
-.classify .classify-list li:hover {
-    background: url('../images/delete.png') no-repeat 90% center;
-    background-size: .8rem;
+.classify .classify-ul {
+    padding-left: 1rem;
+
+    flex: 1;
 }
 
 .classify .classify-ul li:focus {
@@ -55,9 +86,13 @@ content {
 }
 
 .classify .classify-project {
+    display: inline-block;
+
+    margin-right: 50%;
     padding-left: 1.5rem;
-    background: url('../images/file_close.png') no-repeat left 0.2rem;
-    background-size: 1rem 1rem;
+
+    background: url('../images/file_close.png') no-repeat left center;
+    background-size: 1rem;
 }
 
 
@@ -66,20 +101,141 @@ content {
 }
 
 .classify .classify-task {
+    float: left;
+
+    width: 70%;
+    margin-left: 1rem;
+    padding-left: 1.6rem;
+
     background: url('../images/file.png') no-repeat left center;
     background-size: .8rem .8rem;
-    padding-left: 1.6rem;
+}
+
+.classify .del-icon {
+    display: none;
+    margin-top: .3rem;
+
+    width: .8rem;
+}
+
+.classify .classify-task:hover .del-icon {
+    display: block;
+    float: right;
+    margin-right: 1rem;
+    line-height: 1.5rem;
+
+    cursor: pointer;
+}
+
+.classify .del-icon:hover {
+    width: .9rem;
 }
 
 .task {
-    float: left;
-    padding-left: 1 rem;
+    flex: 1;
+
+    border-right: 1px solid #d2d2d2;
     background-color: #fff;
-    width: 18rem;
-    border-right: 1px solid #fdfdfd;
-    border-bottom: 1px solid #fdfdfd;
+
+    min-height: 93vh;
+    flex-direction: column;
+    display: flex;
+}
+
+.task .task-body {
+    height: 3rem;
+    flex: 1;
+}
+
+.task .task-ul {
+    display: flex;
+    flex-direction: row;
+}
+
+.task .task-ul li {
+    flex: 1;
+    text-align: center;
+    height: 3rem;
+    line-height: 3rem;
+    font-size: 14px;
+    background-color: #d4d4d4;
+}
+
+.task .task-ul .task-selected {
+    background-color: #fff;
+}
+
+.task .task-date {
+    padding-left: 1rem;
+    font-size: 14px;
+    height: 2rem;
+    line-height: 2rem;
+    background-color: #fafaee;
+}
+
+.task .task-item {
+    background-color: #fff;
+    padding-left: 2rem;
+    font-size: 14px;
+    height: 1.5rem;
+    line-height: 1.5rem;
+}
+
+.task .task-item:hover {
+    background-color: #ddd;
+}
+
+.task .task-item + .item-done {
+    color: #7ec75c;
 }
 
 .detail {
+    flex: 4;
+}
+
+.detail .detail-header {
+    background-color: #f2f2f2;
+    height: 4rem;
+}
+
+.detail .detail-leftside {
     float: left;
+    margin-right: 40%;
+}
+
+.detail .detail-leftside h4 {
+    font-size: 20px;
+    line-height: 4rem;
+    margin-left: 1rem;
+}
+
+.detail .detail-rightside {
+    float: right;
+    line-height: 4rem;
+    margin-right: 4rem;
+}
+
+.detail .detail-rightside img {
+    width: 2rem;
+    margin-right: 1rem;
+}
+
+.detail .detail-rightside img:hover {
+    width: 2.2rem;
+    cursor: pointer;
+}
+
+.detail .detail-date {
+    background-color: #fafaee;
+    height: 4rem;
+    line-height: 4rem;
+    padding-left: 1rem;
+}
+
+.detail .item-date {
+    display: inline-block;
+}
+
+.detail .detail-content {
+    padding: 1rem;
 }
