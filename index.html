@@ -5,6 +5,9 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="style/reset.css">
     <link rel="stylesheet" href="style/style.css">
+    <script src="scripts/localDB.js"></script>
+    <script src="scripts/utils.js"></script>
+    <script src="scripts/index.js"></script>
     <title>Todo</title>
 </head>
 
@@ -16,36 +19,40 @@
         <div class="classify">
             <ul class="classify-ul">
                 <li class="classify-sum">所有任务（<span>0</span>）</li>
-                <li class="classify-list">分类列表
+                <li class="classify-list"><span>分类列表</span>
                     <ul class="classify-projects">
                         <li>
-                            <div class="classify-project">IFE项目</div>
-                            <img class="del-icon" src="images/delete.png" alt="delete">
+                            <div class="classify-project project-selected">IFE项目
+                                <img class="del-icon" src="images/delete.png" alt="delete">
+                            </div>
                             <ul class="classify-tasks">
                                 <li>
-                                    <div class="classify-task">task01
-                                    <img class="del-icon" src="images/delete.png" alt="delete"></div>
+                                    <div class="classify-task pro-selected">task01
+                                        <img class="del-icon" src="images/delete.png" alt="delete">
+                                    </div>
                                 </li>
                                 <li>
                                     <div class="classify-task">task02
-                                    <img class="del-icon" src="images/delete.png" alt="delete"></div>
+                                        <img class="del-icon" src="images/delete.png" alt="delete">
+                                    </div>
                                 </li>
                             </ul>
                         </li>
                         <li>
-                            <div class="classify-project">Web项目</div>
+                            <div class="classify-project">Web项目
                             <img class="del-icon" src="images/delete.png" alt="delete">
+                        </div>
                         </li>
                     </ul>
                 </li>
             </ul>
-            <div class="new-bottom new-class">新增分类</div>
+            <div class="new-bottom new-class"><b>+</b>新增分类</div>
         </div>
         <div class="task">
             <div class="task-body">
                 <ul class="task-ul">
                     <li class="task-all">所有</li>
-                    <li class="task-ever task-selected">未完成</li>
+                    <li class="task-ever status-selected">未完成</li>
                     <li class="task-done">已完成</li>
                 </ul>
                 <ul class="task-dates">
@@ -53,7 +60,7 @@
                         <div class="task-date">2017-08-08</div>
                         <ul class="task-items">
                             <li class="task-item">to-do 1</li>
-                            <li class="task-item item-done">to-do 2</li>
+                            <li class="task-item task-selected item-done">to-do 2</li>
                         </ul>
                     </li>
                     <li>
@@ -64,7 +71,7 @@
                     </li>
                 </ul>
             </div>
-            <div class="new-bottom new-task">新增任务</div>
+            <div class="new-bottom new-task"><b>+</b>新增任务</div>
         </div>
         <div class="detail">
             <div class="detail-header">

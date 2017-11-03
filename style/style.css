@@ -28,8 +28,6 @@ body {
     text-align: center;
 
     border-top: 1px solid #ddd;
-    background: url('../images/new.png') no-repeat 35% center;
-    background-size: .8rem;
     background-color: #ececec;
 }
 
@@ -38,7 +36,11 @@ body {
     background-color: #fff;
 }
 
+
+
+
 /* header */
+
 .title {
     font-size: 2rem;
     line-height: 7vh;
@@ -54,7 +56,11 @@ content {
     display: flex;
 }
 
+
+
+
 /* 分类列表 */
+
 .classify {
     display: flex;
     flex: 1;
@@ -72,12 +78,19 @@ content {
 }
 
 .classify .classify-ul {
-    padding-left: 1rem;
 
     flex: 1;
 }
 
-.classify .classify-ul li:focus {
+.classify .classify-sum {
+    padding-left: 1rem;
+}
+
+.classify .classify-list span {
+    padding-left: 1rem;
+}
+
+.classify .classify-projects .project-selected {
     background-image: url('../images/file_open.png');
 }
 
@@ -88,26 +101,25 @@ content {
 .classify .classify-project {
     display: inline-block;
 
-    margin-right: 50%;
-    padding-left: 1.5rem;
+    box-sizing: border-box;
+    width: 100%;
+    padding-left: 2.5rem;
 
-    background: url('../images/file_close.png') no-repeat left center;
+    background: url('../images/file_close.png') no-repeat 1rem center;
     background-size: 1rem;
 }
 
-
-.classify .classify-project li:focus {
+.classify .classify-projects .pro-selected {
     background-color: #fff;
 }
 
 .classify .classify-task {
     float: left;
+    box-sizing: border-box;
+    width: 100%;
+    padding-left: 3.6rem;
 
-    width: 70%;
-    margin-left: 1rem;
-    padding-left: 1.6rem;
-
-    background: url('../images/file.png') no-repeat left center;
+    background: url('../images/file.png') no-repeat 2rem center;
     background-size: .8rem .8rem;
 }
 
@@ -118,10 +130,11 @@ content {
     width: .8rem;
 }
 
+.classify .classify-project:hover .del-icon,
 .classify .classify-task:hover .del-icon {
     display: block;
     float: right;
-    margin-right: 1rem;
+    margin-right: 20%;
     line-height: 1.5rem;
 
     cursor: pointer;
@@ -161,8 +174,8 @@ content {
     background-color: #d4d4d4;
 }
 
-.task .task-ul .task-selected {
-    background-color: #fff;
+.task .task-ul .status-selected {
+    background: #fff;
 }
 
 .task .task-date {
@@ -181,11 +194,12 @@ content {
     line-height: 1.5rem;
 }
 
+.task .task-selected,
 .task .task-item:hover {
     background-color: #ddd;
 }
 
-.task .task-item + .item-done {
+.task .task-item+.item-done {
     color: #7ec75c;
 }
 
