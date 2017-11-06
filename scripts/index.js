@@ -22,7 +22,19 @@ function setData(spaceName, data) {
 function addCategory() {
     var categoryName = window.prompt("Please enter the name of the new category:");
     localStorage.setItem("todo", categoryName);
+    renderClassify(categoryName);
+    console.log("新建目录成功");
 }
+function addTask() {
+
+}
+
+// 渲染分类列表
+function renderClassify(categoryName) {}
 
 // 执行初始化
 init("todo");
+
+$.click($(".new-class")[0], function() {
+    addCategory();
+});
