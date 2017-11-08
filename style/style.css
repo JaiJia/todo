@@ -39,6 +39,7 @@ body {
 
 
 
+
 /* header */
 
 .title {
@@ -55,6 +56,7 @@ body {
 content {
     display: flex;
 }
+
 
 
 
@@ -86,7 +88,7 @@ content {
     padding-left: 1rem;
 }
 
-.classify .classify-list span {
+.classify .classify-list>div {
     padding-left: 1rem;
 }
 
@@ -99,6 +101,7 @@ content {
 }
 
 .classify .classify-project {
+    position: relative;
     display: inline-block;
 
     box-sizing: border-box;
@@ -109,8 +112,12 @@ content {
     background-size: 1rem;
 }
 
-.classify .classify-projects .pro-selected {
-    background-color: #fff;
+.classify .classify-project + ul {
+    display: none;
+}
+
+.classify .classify-project.project-selected + ul {
+    display: block;
 }
 
 .classify .classify-task {
@@ -123,21 +130,25 @@ content {
     background-size: .8rem .8rem;
 }
 
+.classify .pro-selected {
+    background-color: #fff;
+}
+
+
 .classify .del-icon {
     display: none;
-    margin-top: .3rem;
+    margin-top: .4rem;
 
     width: .8rem;
+    float: right;
+    margin-right: 20%;
+
+    cursor: pointer;
 }
 
 .classify .classify-project:hover .del-icon,
 .classify .classify-task:hover .del-icon {
     display: block;
-    float: right;
-    margin-right: 20%;
-    line-height: 1.5rem;
-
-    cursor: pointer;
 }
 
 .classify .del-icon:hover {
