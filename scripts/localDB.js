@@ -11,7 +11,7 @@ function setData(spaceName, data) {
     return localStorage.setItem(spaceName, JSON.stringify(data));
 }
 
-window.localDB = (new(function() {
+window.localDB = new (function() {
     //创建一个空间，参数为空间名
     this.createSpace = function(spaceName) {
         if (typeof spaceName !== "string") {
@@ -21,7 +21,7 @@ window.localDB = (new(function() {
 
         //如果还没有数据库空间管理器，新建一个，否则检测空间管理器中是否已存在同名的空间
         if (!localStorage.getItem("localSpaceDB")) {
-            var spaceObj = [];
+            let spaceObj = [];
             var spaceJson = JSON.stringify(spaceObj);
             localStorage.setItem("localSpaceDB", spaceJson);
             console.log("新建存储空间成功");
@@ -32,7 +32,7 @@ window.localDB = (new(function() {
         //检查对象是否存在空间名
         for (var i in spaceObj) {
             if (spaceObj[i].spaceName === spaceName) {
-                console.warn("命名空间已存在");
+                console.log("命名空间已存在");
                 return false;
             }
         }
@@ -69,10 +69,40 @@ window.localDB = (new(function() {
     this.update = function(spaceName, categoryName, newData) {
         if (!newData) { return false; }
         var allData = getData(spaceName);
-        allData[allData.findIndex((item) => {
-            return item.name === categoryName;
-        })] = newData;
-        setData(spaceName, allData);
-        return false;
+        if (allData) {
+            allData[allData.findIndex((item) => {
+                return item.name === categoryName;
+            })] = newData;
+            setData(spaceName, allData);
+        } else {
+            console.error("命名空间不存在");
+            return false;
+        }
     };
-})());
+
+    this.delete = function(spaceName, categoryName) {
+        var allData = getData(spaceName);
+        if (allData) {
+            var ind;
+            var inx = allData.findIndex((item) => {
+                ind = item.value.findIndex((cur) => {
+                    return cur.name === categoryName;
+                });
+                if (ind !== -1) {
+                    return true;
+                } else {
+                    return item.name === categoryName;
+                }
+            });
+            if (ind === -1) {
+                allData.splice(inx, 1);
+            } else {
+                allData[inx].value.splice(ind, 1);
+            }
+            setData(spaceName, allData);
+        } else {
+            console.error("命名空间不存在");
+            return false;
+        }
+    };
+})();

@@ -122,6 +122,15 @@ function hasClass(element, tarClassName) {
     return element.className.indexOf(tarClassName) !== -1;
 }
 
+// 切换元素显示
+function toggleShow(element) {
+    if (($(".detail-show")[0].currentStyle? $(".detail-show")[0].currentStyle : window.getComputedStyle($(".detail-show")[0], null)).display === "block") {
+        element.style.display = "none";
+    } else {
+        element.style.display = "block";
+    }
+}
+
 // 判断siblingNode和element是否为同一个父元素下的同一级的元素，返回bool值
 function isSiblingNode(element, siblingNode) {
     var arr = element.parentNode.childNodes;
@@ -133,6 +142,7 @@ function isSiblingNode(element, siblingNode) {
     return false;
 }
 
+// 返回该元素下所有后代元素
 function enumChildNodes(parentNode) {
     var arr = [];
     (function enumNodes(parentNode) {

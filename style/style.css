@@ -226,11 +226,12 @@ content {
 .detail .detail-leftside {
     float: left;
     margin-right: 40%;
+    line-height: 4rem;
 }
 
-.detail .detail-leftside h4 {
+.detail .detail-leftside .task-name {
     font-size: 20px;
-    line-height: 4rem;
+    border-color: #fff;
     margin-left: 1rem;
 }
 
@@ -243,11 +244,13 @@ content {
 .detail .detail-rightside img {
     width: 2rem;
     margin-right: 1rem;
+    margin-left: .2rem;
 }
 
 .detail .detail-rightside img:hover {
     width: 2.2rem;
     cursor: pointer;
+    margin-left: 0;
 }
 
 .detail .detail-date {
@@ -262,5 +265,20 @@ content {
 }
 
 .detail .detail-content {
-    padding: 1rem;
+    padding: 2rem;
+}
+
+.detail .detail-content textarea {
+    width: 100%;
+    font-size: 16px;
+    border: 2px solid #7ea0ff;
+    resize: none;
+}
+
+.detail .detail-show {
+    display: block;
+}
+
+.detail .detail-edit {
+    display: none;
 }
