@@ -1,17 +1,27 @@
 /* jshint esversion: 6 */
 
+
+
 // 页面初始化
 function init(spaceName) {
     localDB.createSpace(spaceName);
     if (!getData(spaceName)[0]) {
-        setData(spaceName, [{ name: "IFE项目", value: [] }]);
+        setData(spaceName, [{ name: "IFE项目", value: [{ name: "task01", value: [] }] }]);
     }
 
-    renderClassify(spaceName);
-    addClass($(".classify-project")[0], "pro-selected project-selected");
 
+    renderClassify(spaceName);
+    addClass($(".classify-project")[0], "project-selected");
+    addClass($(".classify-task")[0], "pro-selected");
+    renderTask();
+    if ($(".task-item")[0]) {
+        addClass($(".task-item")[0], "task-selected");
+    }
+    renderDetail();
     // 删除分类
     $.delegate($(".classify-projects")[0], "img", "click", deleteCategory);
+
+
 }
 
 // 读取深层数据
@@ -30,7 +40,6 @@ function readData(currentName) {
         parData: parData
     };
 }
-
 
 // 新增分类
 function addCategory(categoryName) {
@@ -58,6 +67,7 @@ function addCategory(categoryName) {
     }
 }
 
+// 删除分类
 function deleteCategory(e) {
     var isSure = window.confirm("Are you sure to delete this category?");
     if (isSure) {
@@ -72,53 +82,87 @@ function toggleDetail() {
     toggleShow($(".detail-edit")[0]);
 }
 
-// 新增任务
-function addTask(taskName) {
+// 新增，编辑任务
+function editTask(e) {
+
+    // 检测是否为二级目录
+    var currentEle = $(".pro-selected")[0];
+    if (!hasClass(currentEle, "classify-task")) {
+        console.warn("请选择二级目录");
+        return false;
+    }
+    if (hasClass(e.target, "status-edit")) {
+        $(".task-name")[1].value = $(".task-name")[0].innerText;
+        $(".item-date")[1].value = $(".item-date")[0].innerText;
+        $(".detail-value")[0].value = $(".detail-content")[0].innerText;
+    }
     toggleDetail();
 }
 
 // 保存任务编辑
 function saveTask() {
-
     var taskDetail = {
-        title: $(".task-name")[1].value,
+        title: $(".task-name")[1].value.trim(),
         date: $(".item-date")[1].value,
         particulars: $(".detail-value")[0].value,
         status: "ever"
     };
+    if (!taskDetail.title || !taskDetail.date || !taskDetail.particulars.trim()) {
+        console.log("请填写完整");
+        return false;
+    }
+
     var currentEle = $(".pro-selected")[0];
     var currentName = currentEle.innerText.split(" ")[0];
     var totalData = readData(currentName);
     var resData = totalData.resData;
     var parData = totalData.parData;
-    var ind = parData.value.findIndex((item) => {
+    var inx = parData.value.findIndex((item) => {
         return item.name === resData.name;
     });
-    resData.value.push(taskDetail);
-    parData.value.splice(ind, 1, resData);
+
+
+    // 判断新加还是修改
+    var isNew = resData.value.findIndex((item) => {
+        return item.title === taskDetail.title;
+    });
+    if (isNew === -1) {
+        resData.value.push(taskDetail);
+        resData.value.sort((previous, current) => {
+            return new Date(previous.date) < new Date(current.date);
+        });
+    } else {
+        resData.value[isNew] = taskDetail;
+    }
+    parData.value.splice(inx, 1, resData);
     localDB.update("todo", parData.name, parData);
-    $(".task-name")[0].innerText = $(".task-name")[1].value;
-    $(".task-date")[0].innerText = $(".task-date")[1].value;
-    $(".detail-content")[0].innerText = $(".detail-value")[0].value;
+
+    renderTask(resData);
+
+    addClass(toArray($(".task-item")).find((item) => {
+        return item.innerText === taskDetail.title;
+    }), "task-selected");
+    renderDetail();
     toggleDetail();
+
 }
 
 // 渲染分类列表
-function renderClassify(categoryName) {
-    var dataList = getData(categoryName);
+function renderClassify(spaceName) {
+    var categoryList = getData(spaceName);
     var str = "";
     str += '<div class="classify-menu">分类列表</div>';
     str += '<ul class="classify-projects">';
-    for (var i = 0; i < dataList.length; i++) {
+    for (var i = 0; i < categoryList.length; i++) {
         str += '<li>';
-        str += '<div class="classify-project">' + dataList[i].name + ' （<span>' + 0 + '</span>）';
+        str += '<div class="classify-project">' + categoryList[i].name + ' （<span>' + 0 + '</span>）';
         str += '<img class="del-icon" src="images/delete.png" alt="delete">';
         str += '</div>';
         str += '<ul class="classify-tasks">';
-        if (dataList[i].value[0]) {
-            for (var j = 0; j < dataList[i].value.length; j++) {
+        if (categoryList[i].value[0]) {
+            for (var j = 0; j < categoryList[i].value.length; j++) {
                 str += '<li>';
-                str += '<div class="classify-task">' + dataList[i].value[j].name + ' （<span>' + 0 + '</span>）';
+                str += '<div class="classify-task">' + categoryList[i].value[j].name + ' （<span>' + 0 + '</span>）';
                 str += '<img class="del-icon" src="images/delete.png" alt="delete">';
                 str += '</div>';
                 str += '</li>';
@@ -132,13 +176,59 @@ function renderClassify(categoryName) {
 }
 
 // 渲染任务列表
-function renderTask(taskName) {}
+function renderTask() {
+    var currentEle = $(".pro-selected")[0];
+    var currentName = currentEle.innerText.split(" ")[0];
+    var totalData = readData(currentName);
+    var resData = totalData.resData;
+
+    var taskList = resData.value;
+    var str = "";
+    var dateArr = [];
+    var childEle;
+    $(".task-dates")[0].innerHTML = "";
+    for (var i = 0; i < taskList.length; i++) {
+        var ind = dateArr.indexOf(taskList[i].date);
+        if (ind === -1) {
+            dateArr.push(taskList[i].date);
+            str = "";
+            str += '<li>';
+            str += '<div class="task-date">' + taskList[i].date + '</div>';
+            str += '<ul class="task-items">';
+            str += '<li class="task-item">' + taskList[i].title + '</li>';
+            str += '</ul>';
+            str += '</li>';
+            $(".task-dates")[0].innerHTML += str;
+        } else {
+            childEle = document.createElement("li");
+            childEle.setAttribute("class", "task-item");
+            childEle.innerText = taskList[i].title;
+            $(".task-items")[ind].appendChild(childEle);
+        }
+    }
+}
 
 // 渲染详情域
 function renderDetail() {
-    $(".task-name")[1].value = $(".task-name")[0].innerText;
-    $(".item-date")[1].value = $(".item-date")[0].innerText;
-    $(".detail-value")[0].value = $(".detail-content")[0].innerText;
+    var currentTask = $(".pro-selected")[0];
+    var currentDetail = $(".task-selected")[0];
+    var currentName = currentTask.innerText.split(" ")[0];
+    var totalData = readData(currentName);
+    var resData = totalData.resData;
+    var parData = totalData.parData;
+    var detailObj = resData.value.find((item) => {
+        return item.title === $(".task-selected")[0].innerText;
+    });
+
+    if (detailObj) {
+        $(".task-name")[0].innerText = detailObj.title;
+        $(".item-date")[0].innerText = detailObj.date;
+        $(".detail-content")[0].innerText = detailObj.particulars;
+    }
+    $(".task-name")[1].value = "";
+    $(".item-date")[1].value = "";
+    $(".detail-value")[0].value = "";
+
 }
 
 // 点击切换样式
@@ -167,7 +257,6 @@ $.click($(".new-class")[0], function() {
         addCategory(categoryName);
         init("todo");
     }
-
 });
 
 
@@ -175,13 +264,17 @@ $.click($(".new-class")[0], function() {
 $.delegate($(".classify-list")[0], "div", "click", tranClass);
 
 // 新增任务
-$.click($(".new-task")[0], function(taskName) {
-    addTask(taskName);
-});
+$.click($(".new-task")[0], editTask);
 
 // 保存任务编辑
-$.click($(".status-edit")[0], saveTask);
+$.click($(".status-edit")[0], editTask);
 $.click($(".status-edit")[1], saveTask);
+$.click($(".status-save")[0], function() {
+
+});
+$.click($(".status-save")[1], function() {
+
+});
 
 // 选择任务状态
 $.delegate($(".task-ul")[0], "li", "click", function(e) {
@@ -189,6 +282,9 @@ $.delegate($(".task-ul")[0], "li", "click", function(e) {
 });
 
 // 选择任务日期
-$.delegate($(".task-dates")[0], "li", "click", function(e) {
-    transferClass($(".task-dates")[0], "task-selected", e);
-});
+if (!!$(".task-dates")[0].childNodes[0]) {
+    $.delegate($(".task-dates")[0], "li", "click", function(e) {
+        transferClass($(".task-dates")[0], "task-selected", e);
+        renderDetail();
+    });
+}

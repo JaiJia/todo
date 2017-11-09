@@ -66,6 +66,8 @@ window.localDB = new (function() {
             return false;
         }
     };
+
+    // 更新数据，参数为空间名，目录名，新数据 目录为一级子目录
     this.update = function(spaceName, categoryName, newData) {
         if (!newData) { return false; }
         var allData = getData(spaceName);
