@@ -40,6 +40,7 @@ body {
 
 
 
+
 /* header */
 
 .title {
@@ -56,6 +57,7 @@ body {
 content {
     display: flex;
 }
+
 
 
 
@@ -112,11 +114,11 @@ content {
     background-size: 1rem;
 }
 
-.classify .classify-project + ul {
+.classify .classify-project+ul {
     display: none;
 }
 
-.classify .classify-project.project-selected + ul {
+.classify .classify-project.project-selected+ul {
     display: block;
 }
 
@@ -141,7 +143,7 @@ content {
 
     width: .8rem;
     float: right;
-    margin-right: 20%;
+    margin-right: 10%;
 
     cursor: pointer;
 }
@@ -210,7 +212,7 @@ content {
     background-color: #ddd;
 }
 
-.task .task-item+.item-done {
+.task .task-item.item-done {
     color: #7ec75c;
 }
 

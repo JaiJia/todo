@@ -206,6 +206,15 @@ function renderTask() {
             $(".task-items")[ind].appendChild(childEle);
         }
     }
+    // 给"已完成"添加Class
+    var doneEle = resData.value.filter((item) => {
+        return item.status === "done";
+    });
+    for (let i = 0; i < doneEle.length; i++) {
+        addClass(toArray($(".task-item")).find((item) => {
+            return item.innerText === doneEle[i].title;
+        }), "item-done");
+    }
 }
 
 // 渲染详情域
@@ -271,9 +280,41 @@ $.click($(".status-edit")[0], editTask);
 $.click($(".status-edit")[1], saveTask);
 $.click($(".status-save")[0], function() {
 
-});
-$.click($(".status-save")[1], function() {
+    var currentEle = $(".pro-selected")[0];
+    var currentName = $(".pro-selected")[0].innerText.split(" ")[0];
+    var totalData = readData($(".pro-selected")[0].innerText.split(" ")[0]);
+    var resData = totalData.resData;
+    var parData = totalData.parData;
+    var inx = parData.value.findIndex((item) => {
+        return item.name === resData.name;
+    });
 
+    var isNew = resData.value.findIndex((item) => {
+        return item.title === $(".task-name")[0].innerText || $(".task-name")[1].value;
+    });
+    resData.value[isNew].status = "done";
+    parData.value.splice(inx, 1, resData);
+    localDB.update("todo", parData.name, parData);
+
+    renderTask();
+});
+$.click($(".status-save")[0], function() {
+
+    var currentEle = $(".pro-selected")[0];
+    var currentName = $(".pro-selected")[0].innerText.split(" ")[0];
+    var totalData = readData(currentName);
+    var resData = totalData.resData;
+    var parData = totalData.parData;
+    var inx = parData.value.findIndex((item) => {
+        return item.name === resData.name;
+    });
+
+    var isNew = resData.value.findIndex((item) => {
+        return item.title === $(".task-name")[0].innerText || $(".task-name")[1].value;
+    });
+    resData.value[isNew].status = "done";
+    parData.value.splice(inx, 1, resData);
+    localDB.update("todo", parData.name, parData);
 });
 
 // 选择任务状态
