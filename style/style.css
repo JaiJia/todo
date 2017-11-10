@@ -33,8 +33,10 @@ body {
 
 .new-bottom:hover {
     cursor: default;
+
     background-color: #fff;
 }
+
 
 
 
@@ -63,17 +65,18 @@ content {
 
 
 
+
 /* 分类列表 */
 
 .classify {
     display: flex;
-    flex: 1;
 
     min-height: 93vh;
 
     border-right: 1px solid #e7e7e7;
     background-color: #f2f2f2;
 
+    flex: 1;
     flex-flow: column;
 }
 
@@ -82,7 +85,6 @@ content {
 }
 
 .classify .classify-ul {
-
     flex: 1;
 }
 
@@ -104,6 +106,7 @@ content {
 
 .classify .classify-project {
     position: relative;
+
     display: inline-block;
 
     box-sizing: border-box;
@@ -123,7 +126,10 @@ content {
 }
 
 .classify .classify-task {
+    font-size: 14px;
+
     float: left;
+
     box-sizing: border-box;
     width: 100%;
     padding-left: 3.6rem;
@@ -139,10 +145,10 @@ content {
 
 .classify .del-icon {
     display: none;
-    margin-top: .4rem;
+    float: right;
 
     width: .8rem;
-    float: right;
+    margin-top: .4rem;
     margin-right: 10%;
 
     cursor: pointer;
@@ -158,18 +164,20 @@ content {
 }
 
 .task {
-    flex: 1;
+    display: flex;
+    flex-direction: column;
+
+    min-height: 93vh;
 
     border-right: 1px solid #d2d2d2;
     background-color: #fff;
 
-    min-height: 93vh;
-    flex-direction: column;
-    display: flex;
+    flex: 1;
 }
 
 .task .task-body {
     height: 3rem;
+
     flex: 1;
 }
 
@@ -179,12 +187,16 @@ content {
 }
 
 .task .task-ul li {
-    flex: 1;
-    text-align: center;
-    height: 3rem;
-    line-height: 3rem;
     font-size: 14px;
+    line-height: 3rem;
+
+    height: 3rem;
+
+    text-align: center;
+
     background-color: #d4d4d4;
+
+    flex: 1;
 }
 
 .task .task-ul .status-selected {
@@ -192,19 +204,25 @@ content {
 }
 
 .task .task-date {
-    padding-left: 1rem;
     font-size: 14px;
-    height: 2rem;
     line-height: 2rem;
+
+    height: 2rem;
+    padding-left: 1rem;
+
     background-color: #fafaee;
 }
 
 .task .task-item {
-    background-color: #fff;
-    padding-left: 2rem;
     font-size: 14px;
-    height: 1.5rem;
     line-height: 1.5rem;
+
+    display: block;
+
+    height: 1.5rem;
+    padding-left: 2rem;
+
+    background-color: #fff;
 }
 
 .task .task-selected,
@@ -213,6 +231,8 @@ content {
 }
 
 .task .task-item.item-done {
+    display: block;
+
     color: #7ec75c;
 }
 
@@ -221,25 +241,32 @@ content {
 }
 
 .detail .detail-header {
-    background-color: #f2f2f2;
     height: 4rem;
+
+    background-color: #f2f2f2;
 }
 
 .detail .detail-leftside {
-    float: left;
-    margin-right: 40%;
     line-height: 4rem;
+
+    float: left;
+
+    margin-right: 40%;
 }
 
 .detail .detail-leftside .task-name {
     font-size: 20px;
-    border-color: #fff;
+
     margin-left: 1rem;
+
+    border-color: #fff;
 }
 
 .detail .detail-rightside {
-    float: right;
     line-height: 4rem;
+
+    float: right;
+
     margin-right: 4rem;
 }
 
@@ -251,15 +278,18 @@ content {
 
 .detail .detail-rightside img:hover {
     width: 2.2rem;
-    cursor: pointer;
     margin-left: 0;
+
+    cursor: pointer;
 }
 
 .detail .detail-date {
-    background-color: #fafaee;
-    height: 4rem;
     line-height: 4rem;
+
+    height: 4rem;
     padding-left: 1rem;
+
+    background-color: #fafaee;
 }
 
 .detail .item-date {
@@ -271,10 +301,13 @@ content {
 }
 
 .detail .detail-content textarea {
-    width: 100%;
     font-size: 16px;
-    border: 2px solid #7ea0ff;
+
+    width: 100%;
+
     resize: none;
+
+    border: 2px solid #7ea0ff;
 }
 
 .detail .detail-show {
